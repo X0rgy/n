@@ -343,7 +343,11 @@ const ContactPage = () => {
                   <p className="text-gray-400 font-rajdhani mb-4">
                     Get instant support via WhatsApp for quick questions and urgent issues.
                   </p>
-                  <Button variant="secondary" className="w-full">
+                  <Button 
+                    variant="secondary" 
+                    className="w-full"
+                    onClick={() => window.open('https://wa.me/15551234567?text=Hello%20Nextgen%20Computers!%20I%20need%20help%20with%20my%20computer.', '_blank')}
+                  >
                     Chat on WhatsApp
                   </Button>
                 </div>

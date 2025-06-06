@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { 
   Laptop, 
   Monitor, 
@@ -157,12 +158,16 @@ const ServicesPreview = () => {
               tailored to your specific requirements.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg">
-                Get Custom Quote
-              </Button>
-              <Button variant="outline" size="lg">
-                View All Services
-              </Button>
+              <Link href="/contact">
+                <Button size="lg">
+                  Get Custom Quote
+                </Button>
+              </Link>
+              <Link href="/services">
+                <Button variant="outline" size="lg">
+                  View All Services
+                </Button>
+              </Link>
             </div>
           </div>
         </motion.div>

@@ -3,6 +3,8 @@ import { Orbitron, Rajdhani, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import ScrollToTop from "@/components/ui/ScrollToTop";
+import WhatsAppButton from "@/components/ui/WhatsAppButton";
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",
@@ -77,6 +79,8 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <ScrollToTop />
+        <WhatsAppButton />
       </body>
     </html>
   );

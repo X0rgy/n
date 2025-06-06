@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { ArrowRight, Zap, Shield, Clock, Star } from 'lucide-react';
 import Button from '../ui/Button';
 import MatrixBackground from '../ui/MatrixBackground';
@@ -77,13 +78,17 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.9 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
-            <Button size="lg" className="group">
-              Get Free Diagnosis
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button variant="outline" size="lg">
-              View Our Services
-            </Button>
+            <Link href="/contact">
+              <Button size="lg" className="group">
+                Get Free Diagnosis
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+            <Link href="/services">
+              <Button variant="outline" size="lg">
+                View Our Services
+              </Button>
+            </Link>
           </motion.div>
 
           {/* Stats */}

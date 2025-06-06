@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Zap } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,23 +54,34 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="relative text-gray-300 hover:text-neon-green transition-colors duration-300 font-rajdhani font-medium text-lg group"
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`relative transition-colors duration-300 font-rajdhani font-medium text-lg group ${
+                    isActive 
+                      ? 'text-neon-green' 
+                      : 'text-gray-300 hover:text-neon-green'
+                  }`}
+                >
+                  {item.name}
+                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-neon-green transition-all duration-300 ${
+                    isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`} />
+                </Link>
+              );
+            })}
+            <Link href="/contact">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-r from-neon-green to-cyber-blue text-dark-bg px-6 py-2 rounded-lg font-rajdhani font-semibold hover:shadow-lg hover:shadow-neon-green/25 transition-all duration-300"
               >
-                {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-neon-green transition-all duration-300 group-hover:w-full" />
-              </Link>
-            ))}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-gradient-to-r from-neon-green to-cyber-blue text-dark-bg px-6 py-2 rounded-lg font-rajdhani font-semibold hover:shadow-lg hover:shadow-neon-green/25 transition-all duration-300"
-            >
-              Get Quote
-            </motion.button>
+                Get Quote
+              </motion.button>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -93,30 +106,39 @@ const Navbar = () => {
             className="md:hidden bg-dark-bg/95 backdrop-blur-md border-t border-neon-green/20"
           >
             <div className="px-4 py-4 space-y-4">
-              {navItems.map((item, index) => (
-                <motion.div
-                  key={item.name}
+              {navItems.map((item, index) => {
+                const isActive = pathname === item.href;
+                return (
+                  <motion.div
+                    key={item.name}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <Link
+                      href={item.href}
+                      onClick={() => setIsOpen(false)}
+                      className={`block transition-colors duration-300 font-rajdhani font-medium text-lg py-2 ${
+                        isActive 
+                          ? 'text-neon-green' 
+                          : 'text-gray-300 hover:text-neon-green'
+                      }`}
+                    >
+                      {item.name}
+                    </Link>
+                  </motion.div>
+                );
+              })}
+              <Link href="/contact" onClick={() => setIsOpen(false)}>
+                <motion.button
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: navItems.length * 0.1 }}
+                  className="w-full bg-gradient-to-r from-neon-green to-cyber-blue text-dark-bg px-6 py-3 rounded-lg font-rajdhani font-semibold mt-4"
                 >
-                  <Link
-                    href={item.href}
-                    onClick={() => setIsOpen(false)}
-                    className="block text-gray-300 hover:text-neon-green transition-colors duration-300 font-rajdhani font-medium text-lg py-2"
-                  >
-                    {item.name}
-                  </Link>
-                </motion.div>
-              ))}
-              <motion.button
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: navItems.length * 0.1 }}
-                className="w-full bg-gradient-to-r from-neon-green to-cyber-blue text-dark-bg px-6 py-3 rounded-lg font-rajdhani font-semibold mt-4"
-              >
-                Get Quote
-              </motion.button>
+                  Get Quote
+                </motion.button>
+              </Link>
             </div>
           </motion.div>
         )}
